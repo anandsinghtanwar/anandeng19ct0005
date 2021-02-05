@@ -22,7 +22,7 @@ float compute(Frac f1,Frac f2)
     sum=(f1.a / f1.b)+(f2.a/f2.b); 
     return sum;
 }
-void output(Frac f1, Frac f2, float res)
+void output( float res)
 {
     printf("The answer is: %f",res);
 }
@@ -33,6 +33,6 @@ int main(void)
     f1=input();
     f2=input();
     res=compute(f1,f2);
-    output(f1,f2,res);
+    output(res);
     return 0;
 }
