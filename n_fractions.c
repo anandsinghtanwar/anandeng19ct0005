@@ -6,17 +6,17 @@ struct frac
     float a;
     float b;
 };
-typedef struct frac Frac;
-Frac input()
+typedef struct frac Fr;
+Fr input()
 {
-    Frac f;
+    Fr f;
     printf("Enter numerator:");
     scanf("%f",&f.a);
     printf("Enter denominator:");
     scanf("%f",&f.b);
     return f;
 }
-float compute(Frac f)
+float compute(Fr f)
 {
     float res;
     res=(f.a / f.b); 
