@@ -1,0 +1,112 @@
+#include<stdio.h>
+struct student
+{
+    char name[100];
+    float avg;
+    char grade;
+    int scores[100];
+    
+};
+typedef struct student std;
+struct gradebook{
+    std data[100];
+    char coursename[100];
+    int tstud;
+    int tscores;
+    float weights[100];
+    float tweights;
+};
+typedef struct gradebook gdb;
+
+
+std input_one_student(int tscores)
+{
+    std temp;
+    scanf("%s",temp.name);
+    for(int k=0;k<tscores;k++)
+    {
+        scanf("%d",&temp.scores[k]);
+    }
+    return temp;
+}
+
+gdb input_n_student()
+{
+    int j;
+    gdb g;
+    scanf("%s",g.coursename);
+    scanf("%d",&g.tstud);
+    scanf("%d",&g.tscores);
+    g.tweights=0;
+    for(j=0;j<g.tscores;j++)
+    {
+        scanf("%f",&g.weights[j]);
+        g.tweights+=g.weights[j];
+    }
+    for(j=0;j<g.tstud;j++)
+    {
+        g.data[j]=input_one_student(g.tscores);
+    }
+    return g;
+}
+
+gdb compute_one_student(int j,gdb g)
+{
+    float s=0;
+    int k;
+   for(k=0;k<g.tscores;k++)
+    {
+        s+=(g.data[j].scores[k]*g.weights[k]);
+    }
+    g.data[j].avg=s/g.tweights;
+    if(g.data[j].avg>=0 && g.data[j].avg<60)
+    g.data[j].grade='F';
+    else if(g.data[j].avg>=60 && g.data[j].avg<70)
+    g.data[j].grade='D';
+    else if(g.data[j].avg>=70 && g.data[j].avg<80)
+    g.data[j].grade='C';
+    else if(g.data[j].avg>=80 && g.data[j].avg<90)
+    g.data[j].grade='B';
+    else if(g.data[j].avg>=90 && g.data[j].avg<=100)
+    g.data[j].grade='A';
+    return g;
+}
+gdb compute_n_student(gdb g)
+{
+    int j;
+    for( j=0;j<g.tstud;j++)
+    {
+        g=compute_one_student(j,g);
+    }
+    return g;
+}
+
+
+print_one_student(int i,gdb g)
+{
+    printf("%s   %0.2f %c\n",g.data[i].name,g.data[i].avg,g.data[i].grade);
+    
+}
+
+print_n_student(gdb g)
+{
+     int i;
+    printf("%s\n",g.coursename);
+    for(i=0;i<g.tstud;i++)
+    {
+        print_one_student(i,g);
+    }
+}
+int main()
+{
+    int n,i;
+    scanf("%d",&n);
+    gdb g[n];
+    for(i=0;i<n;i++)
+    {
+        g[i]=input_n_student();
+        g[i]=compute_n_student(g[i]);
+        print_n_student(g[i]);
+    }
+    return 0;
+}
