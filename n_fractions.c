@@ -6,68 +6,75 @@ struct frac
     int b;
 };
 typedef struct frac Frac;
-Frac input()
+Frac inputfraction()
 {
     Frac f;
-    printf("Enter numerator:");
+    printf("Enter numerator:\n");
     scanf("%d",&f.a);
-    printf("Enter denominator:");
+    printf("Enter denominator:\n");
     scanf("%d",&f.b);
     return f;
 }
-Frac add(Frac f,Frac result)
+void inputarr(int tcase,Frac data[tcase])
 {
- 
-   Frac add;
-   add.a=((f.a)*(result.b))+((result.a)*(f.b));
-   add.b=((f.b)*(result.b));
-   return add;
+    for(int i=0;i<tcase;i++)
+    {
+        data[i]=inputfraction();
+    }
 }
-Frac gcd(Frac result)
+int find_gcd(int num1,int num2)
 {
     int gcd;
-    Frac simp;
-
-    for(int i=1; i <=result.a && i <= result.b; ++i)
+    for(int i=1; i <=num1 && i <= num2; ++i)
     {
-        if(result.a%i==0 && result.b%i==0)
+        if(num1%i==0 && num2%i==0)
             gcd = i;
     }
-    simp.a=result.a/gcd;
-    simp.b=result.b/gcd;
-    return simp;
+    return gcd;
     
 }
-
-
-Frac output(Frac s)
+Frac add(int tcase,Frac data[tcase])
 {
-    printf("The answer is: %d/%d",s.a,s.b);
+    Frac sum;
+    sum.a=0;
+    sum.b=1;
+    for(int i=0;i<tcase;i++)
+    {
+      sum.a=(data[i].a)*(sum.b)+((sum.a)*(data[i].b));
+      sum.b=((sum.b)*(data[i].b));
+        
+    }
+    int divi=find_gcd(sum.a,sum.b);
+    sum.a=sum.a/divi;
+    sum.b=sum.b/divi;
+    return sum;
+}
+void displayoutput(int tcase,Frac data[tcase],Frac result)
+{
+    printf("\n");
+    for(int i=0;i<tcase;i++)
+    {
+        if(i<tcase-1)
+        {
+          printf("%d/%d+",data[i].a,data[i].b);
+        }
+        else 
+        {
+           printf("%d/%d=%d/%d",data[i].a,data[i].b,result.a,result.b);
+        }
+    }
+    
+    
 }
 int main(void)
 {
-    int n;
-    float sum=0.0;
-    Frac f,result,s;
+    int n,tcase;
+    Frac result;
     printf("Enter the value of n:");
-    scanf("%d",&n);
-    for(int i=0;i<n;i++)
-    {
-        if(i==0)
-        {
-           result=input();
-        }
-        else
-        {
-           f=input();
-           result=add(f,result);
-           
-        }
-    
-    }
-    
-    s=gcd(result);
-    output(s);
+    scanf("%d",&tcase);
+    Frac data[tcase];
+    inputarr(tcase,data);
+    result=add(tcase,data);
+    displayoutput(tcase,data,result);
     return 0;
 }
-
