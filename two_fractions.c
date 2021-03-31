@@ -1,4 +1,4 @@
-//WAP to find the sum of two fractions.
+#include<stdio.h>
 struct frac
 {
    int a;
@@ -16,46 +16,42 @@ Frac input()
     scanf("%d",&f.b);
     return f;
 }
+int find_gcd1(int num1,int num2)
+{
+    int gcd;
+    for(int i=1; i <=num1 && i <= num2; ++i)
+    {
+        if(num1%i==0 && num2%i==0)
+            gcd = i;
+    }
+    return gcd;
+    
+}
+int find_gcd2(int num1,int num2)
+{
+    int gcd;
+    //when loop will start form i=2 it will show garbage value for prime no
+    //so we have to initialize gcd=1
+    gcd=1;
+    for(int i=2; i <=num1 && i <= num2; ++i)
+    {
+        if(num1%i==0 && num2%i==0)
+            gcd = i;
+    }
+    return gcd;
+    
+}
 
 
 Frac add(Frac f1,Frac f2)
 {
  
-   Frac add;
-   add.a=((f1.a)*(f2.b))+((f2.a)*(f1.b));
-   add.b=((f1.b)*(f2.b));
-   return add;
-}
-
-Frac gcd(Frac z)
-{
-    int gcd;
-    Frac simp;
-
-    for(int i=1; i <=z.a && i <= z.b; ++i)
-    {
-        if(z.a%i==0 && z.b%i==0)
-            gcd = i;
-    }
-    simp.a=z.a/gcd;
-    simp.b=z.b/gcd;
-    return simp;
-    
-}
-
-void output(Frac f1, Frac f2, Frac s)
-{
-  printf("The sum of %d/%d and %d/%d is %d/%d",f1.a,f1.b,f2.a,f2.b,s.a,s.b);
-}
-
-int main(void)
-{
-   int n,d;
-   Frac f1,f2,z,s;
-   f1=input();
-   f2=input();
-   z=add(f1,f2);
-   s=gcd(z);
-   output(f1,f2,s);
-   return 0;
+   Frac sum,simpl;
+   int divi;
+   sum.a=((f1.a)*(f2.b))+((f2.a)*(f1.b));
+   sum.b=((f1.b)*(f2.b));
+   divi=find_gcd1(sum.a,sum.b);
+   simpl.a=sum.a/divi;
+   simpl.b=sum.b/divi;
+   return simpl;
 }
