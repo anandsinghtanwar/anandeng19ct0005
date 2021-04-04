@@ -54,36 +54,35 @@ void input_n_student(int tcase,gdb g[tcase])
 }
 
 
-gdb compute_one_student(gdb g)
+void compute_one_student(gdb *g)
 {
-    for(int i=0;i<g.tstud;i++)
+    for(int i=0;i<g->tstud;i++)
     {
        float sum=0;
-       for(int k=0;k<g.tscores;k++)
+       for(int k=0;k<g->tscores;k++)
         {
-            sum+=(g.data[i].scores[k]*g.weights[k]);
+            sum+=(g->data[i].scores[k]*g->weights[k]);
         }
-        g.data[i].avg=sum/g.tweights;
-        if(g.data[i].avg>=0 && g.data[i].avg<60)
-        g.data[i].grade='F';
-        else if(g.data[i].avg>=60 && g.data[i].avg<70)
-        g.data[i].grade='D';
-        else if(g.data[i].avg>=70 && g.data[i].avg<80)
-        g.data[i].grade='C';
-        else if(g.data[i].avg>=80 && g.data[i].avg<90)
-        g.data[i].grade='B';
-        else if(g.data[i].avg>=90 && g.data[i].avg<=100)
-        g.data[i].grade='A';
+        g->data[i].avg=sum/(g->tweights);
+        if(g->data[i].avg>=0 && g->data[i].avg<60)
+        g->data[i].grade='F';
+        else if(g->data[i].avg>=60 && g->data[i].avg<70)
+        g->data[i].grade='D';
+        else if(g->data[i].avg>=70 && g->data[i].avg<80)
+        g->data[i].grade='C';
+        else if(g->data[i].avg>=80 && g->data[i].avg<90)
+        g->data[i].grade='B';
+        else if(g->data[i].avg>=90 && g->data[i].avg<=100)
+        g->data[i].grade='A';
     }
-    return g;
 }
 
-gdb compute_n_student(int tcase,gdb g[tcase])
+void compute_n_student(int tcase,gdb g[tcase])
 {
-    for(int i=0;i<tcase;i++)
+    for(int j=0;j<tcase;j++)
     {
         
-         g[i]=compute_one_student(g[i]);
+        compute_one_student(&g[j]);
         
     } 
 }
